@@ -1,0 +1,162 @@
+/* style.css */
+body {
+    margin: 0;
+    padding: 0;
+    background: #050005; /* Đen tím thẫm */
+    overflow: hidden;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif; /* Dùng font hiện đại hơn nếu có */
+}
+
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* START SCREEN */
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #000, #220011);
+    color: #ffb7b2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+.start-content h1 {
+    animation: pulse 1.5s infinite;
+}
+
+/* COUNTDOWN */
+#countdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12rem;
+    font-weight: bold;
+    color: #ff1493;
+    text-shadow: 0 0 50px #ff1493;
+    z-index: 800;
+    opacity: 0;
+    pointer-events: none;
+}
+.count-animate {
+    animation: countPop 1s ease-out forwards;
+}
+
+/* CONTENT LAYOUT */
+#celebration-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    flex-direction: column; /* Xếp theo cột: Giữa (ảnh+text 2 bên) rồi đến Chân trang */
+    justify-content: center;
+    align-items: center;
+    transition: opacity 3s ease-in-out;
+    gap: 30px; /* Khoảng cách giữa phần giữa và dòng "Mãi yêu em" */
+}
+#celebration-content.visible { opacity: 1; }
+
+.middle-section {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center;
+    gap: 40px; /* Khoảng cách giữa text và ảnh */
+    width: 90%;
+}
+
+/* === THAY ĐỔI QUAN TRỌNG Ở ĐÂY: CHỮ DỌC XẾP CHỒNG === */
+.side-text {
+    /* Loại bỏ writing-mode cũ */
+    /* writing-mode: vertical-rl; */
+    
+    /* Kỹ thuật mới để xếp chồng chữ cái */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    width: 1em; /* Ép chiều rộng cực nhỏ chỉ đủ 1 chữ cái */
+    word-break: break-all; /* Bắt buộc ngắt dòng sau mỗi ký tự */
+    line-height: 1.1; /* Khoảng cách giữa các ký tự */
+    text-align: center;
+    
+    font-size: 2.5rem; /* Kích thước chữ vừa phải */
+    font-weight: 800;
+    letter-spacing: 0; /* Không cần spacing ngang nữa */
+    
+    /* Màu gradient và bóng */
+    color: transparent;
+    background: linear-gradient(to bottom, #ff00cc, #00ccff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 15px rgba(255, 0, 204, 0.6);
+    text-transform: uppercase;
+}
+
+/* ẢNH */
+.image-container {
+    position: relative;
+    flex-shrink: 0; /* Không cho ảnh bị co lại */
+}
+.anniversary-img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 0 50px rgba(255, 20, 147, 0.8);
+    object-fit: cover;
+}
+
+/* CHỮ MÃI YÊU EM (Nổi bật ở dưới) */
+.footer-text {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #ff0033; /* Đỏ rực */
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 
+        0 0 10px #fff, 
+        0 0 20px #ff00de, 
+        0 0 40px #ff00de;
+    animation: heartBeat 1.5s infinite;
+}
+
+/* ANIMATIONS */
+@keyframes countPop {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive cho điện thoại */
+@media (max-width: 768px) {
+    .middle-section { gap: 15px; }
+    .side-text { font-size: 1.5rem; } /* Giảm size chữ trên mobile */
+    .anniversary-img { width: 150px; height: 150px; border-width: 3px;}
+    .footer-text { font-size: 2rem; }
+    #celebration-content { gap: 20px; }
+}
